@@ -1,4 +1,6 @@
-function addDownloadButton() {
+export {};
+
+const addDownloadButton = () => {
   if (document.querySelector(".download-button")) return;
 
   const rightControls = document.querySelector(".ytp-right-controls");
@@ -35,14 +37,14 @@ function addDownloadButton() {
   }
 
   console.log("다운로드 버튼이 추가되었습니다.");
-}
+};
 
-function handleDownload() {
+const handleDownload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const videoId = urlParams.get("v");
   const playlistId = urlParams.get("list");
 
-  let downloadUrl;
+  let downloadUrl: string;
 
   if (playlistId) {
     downloadUrl = `http://localhost:3006/downloadPlaylist?playlistId=${playlistId}`;
@@ -59,7 +61,7 @@ function handleDownload() {
   chrome.runtime.sendMessage({ action: "download", url: downloadUrl }, function (response) {
     console.log("다운로드 요청 응답:", response);
   });
-}
+};
 
 // 페이지 로드 시 버튼 추가 시도
 addDownloadButton();
