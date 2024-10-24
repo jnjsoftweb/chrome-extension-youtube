@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "My Chrome Extension",
+  "name": "Youtube Downloader",
   "version": "1.0",
-  "description": "Get the current URL and title.",
+  "description": "Download Youtube videos, subscriptions, playlists",
   "content_scripts": [
     {
       "matches": ["*://www.youtube.com/*"],
