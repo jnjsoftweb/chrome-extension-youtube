@@ -1,0 +1,13 @@
+.download-button {
+  width: 48px !important;
+  height: 48px !important;
+  cursor: pointer !important;
+  opacity: 0.9 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.download-button:hover {
+  opacity: 1 !important;
+}
