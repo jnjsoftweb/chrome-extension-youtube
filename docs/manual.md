@@ -6,6 +6,4 @@ node .
 ```
 
 ## extension 실행
-- 'Extension' 버튼 클릭
-
-- 'download' 버튼 클릭
+- youtube 동영상 controls 에서 다운로드 아이콘 버튼 클릭
