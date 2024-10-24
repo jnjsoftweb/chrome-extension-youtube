@@ -25,24 +25,30 @@ function App() {
     if (info.url.includes("youtube.com")) {
       const urlParams = new URLSearchParams(new URL(info.url).search);
       const videoId = urlParams.get("v");
-      // console.log(`http://localhost:3006/downloadYoutubeAll?videoIds=${videoId}`);
+      const playlistId = urlParams.get("list");
 
-      if (videoId) {
-        const downloadUrl = `http://localhost:3006/downloadYoutubeAll?videoIds=${videoId}`;
-        fetch(downloadUrl)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("다운로드 요청에 실패했습니다.");
-            }
-            // 성공적으로 요청을 보냈을 때의 처리
-            console.log("다운로드 요청을 보냈습니다.");
-          })
-          .catch((error) => {
-            console.error("오류:", error);
-          });
+      let downloadUrl: string;
+      console.log(playlistId, videoId);
+
+      if (playlistId) {
+        downloadUrl = `http://localhost:3006/downloadPlaylist?playlistId=${playlistId}`;
+      } else if (videoId) {
+        downloadUrl = `http://localhost:3006/downloadYoutubeAll?videoIds=${videoId}`;
       } else {
-        console.error("videoId를 찾을 수 없습니다.");
+        console.error("videoId 또는 playlistId를 찾을 수 없습니다.");
+        return;
       }
+
+      fetch(downloadUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("다운로드 요청에 실패했습니다.");
+          }
+          console.log("다운로드 요청을 보냈습니다.");
+        })
+        .catch((error) => {
+          console.error("오류:", error);
+        });
     } else {
       console.log("YouTube URL이 아닙니다.");
     }

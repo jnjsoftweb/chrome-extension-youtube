@@ -38,18 +38,27 @@ function addDownloadButton() {
 }
 
 function handleDownload() {
-  const videoId = new URLSearchParams(window.location.search).get("v");
-  if (videoId) {
-    const downloadUrl = `http://localhost:3006/downloadYoutubeAll?videoIds=${videoId}`;
-    console.log("다운로드 URL:", downloadUrl);
+  const urlParams = new URLSearchParams(window.location.search);
+  const videoId = urlParams.get("v");
+  const playlistId = urlParams.get("list");
 
-    // 백그라운드 스크립트에 메시지 전송
-    chrome.runtime.sendMessage({ action: "download", url: downloadUrl }, function (response) {
-      console.log("다운로드 요청 응답:", response);
-    });
+  let downloadUrl;
+
+  if (playlistId) {
+    downloadUrl = `http://localhost:3006/downloadPlaylist?playlistId=${playlistId}`;
+  } else if (videoId) {
+    downloadUrl = `http://localhost:3006/downloadYoutubeAll?videoIds=${videoId}`;
   } else {
-    console.error("videoId를 찾을 수 없습니다.");
+    console.error("videoId 또는 playlistId를 찾을 수 없습니다.");
+    return;
   }
+
+  console.log("다운로드 URL:", downloadUrl);
+
+  // 백그라운드 스크립트에 메시지 전송
+  chrome.runtime.sendMessage({ action: "download", url: downloadUrl }, function (response) {
+    console.log("다운로드 요청 응답:", response);
+  });
 }
 
 // 페이지 로드 시 버튼 추가 시도
